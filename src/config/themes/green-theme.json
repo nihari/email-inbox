@@ -1,0 +1,38 @@
+{
+  "themeId": "green-theme",
+  "themeName": "Modern Green Theme",
+  "colors": {
+    "primary": "#059669",
+    "secondary": "#047857",
+    "background": "#f0fdf4",
+    "surface": "#ffffff",
+    "text": "#064e3b",
+    "textSecondary": "#065f46",
+    "border": "#bbf7d0",
+    "accent": "#10b981",
+    "success": "#059669",
+    "warning": "#d97706",
+    "error": "#dc2626"
+  },
+  "typography": {
+    "fontFamily": "Inter, system-ui, sans-serif",
+    "fontSize": {
+      "small": "0.875rem",
+      "medium": "1rem",
+      "large": "1.125rem",
+      "xl": "1.25rem"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem"
+  },
+  "branding": {
+    "logoColor": "#059669",
+    "logoFontSize": "1.5rem",
+    "logoFontWeight": "600"
+  }
+}

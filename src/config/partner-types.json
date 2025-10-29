@@ -1,0 +1,34 @@
+{
+  "partnerTypes": [
+    {
+      "typeId": "enterprise",
+      "typeName": "Enterprise",
+      "description": "Large enterprise customers"
+    },
+    {
+      "typeId": "small-business",
+      "typeName": "Small Business",
+      "description": "Small to medium businesses"
+    },
+    {
+      "typeId": "individual",
+      "typeName": "Individual",
+      "description": "Individual users"
+    },
+    {
+      "typeId": "nonprofit",
+      "typeName": "Nonprofit",
+      "description": "Nonprofit organizations"
+    },
+    {
+      "typeId": "government",
+      "typeName": "Government",
+      "description": "Government agencies"
+    },
+    {
+      "typeId": "education",
+      "typeName": "Education",
+      "description": "Educational institutions"
+    }
+  ]
+}

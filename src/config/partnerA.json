@@ -1,0 +1,13 @@
+{
+  "partnerId": "partnerA",
+  "partnerName": "Partner A",
+  "partnerType": "enterprise",
+  "themeId": "blue-theme",
+  "features": {
+    "emailPreviewSnippet": true,
+    "markAsSpamButton": false,
+    "bulkActionsToolbar": true,
+    "searchFilter": true,
+    "replyFunctionality": true
+  }
+}

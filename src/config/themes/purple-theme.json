@@ -1,0 +1,38 @@
+{
+  "themeId": "purple-theme",
+  "themeName": "Elegant Purple Theme",
+  "colors": {
+    "primary": "#7c3aed",
+    "secondary": "#6d28d9",
+    "background": "#faf5ff",
+    "surface": "#ffffff",
+    "text": "#581c87",
+    "textSecondary": "#7c2d12",
+    "border": "#e9d5ff",
+    "accent": "#8b5cf6",
+    "success": "#059669",
+    "warning": "#d97706",
+    "error": "#dc2626"
+  },
+  "typography": {
+    "fontFamily": "Inter, system-ui, sans-serif",
+    "fontSize": {
+      "small": "0.875rem",
+      "medium": "1rem",
+      "large": "1.125rem",
+      "xl": "1.25rem"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem"
+  },
+  "branding": {
+    "logoColor": "#7c3aed",
+    "logoFontSize": "1.5rem",
+    "logoFontWeight": "600"
+  }
+}
