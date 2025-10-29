@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { Email } from '../types';
 
 interface InboxListProps {
@@ -9,7 +9,8 @@ interface InboxListProps {
   showPreview?: boolean;
 }
 
-export const InboxList: React.FC<InboxListProps> = ({ emails, onEmailClick, onToggleSelection, searchQuery = '', showPreview = true }) => {
+// Memoize to prevent re-renders when parent re-renders but props haven't changed
+export const InboxList: React.FC<InboxListProps> = React.memo(({ emails, onEmailClick, onToggleSelection, searchQuery = '', showPreview = true }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -25,16 +26,21 @@ export const InboxList: React.FC<InboxListProps> = ({ emails, onEmailClick, onTo
     }
   };
 
-  const highlightText = (text: string, query: string) => {
-    if (!query.trim()) {
+  // Memoize highlight regex to avoid recreating on every render
+  const highlightRegex = useMemo(() => {
+    return searchQuery.trim() ? new RegExp(`(${searchQuery})`, 'gi') : null;
+  }, [searchQuery]);
+
+  const highlightText = (text: string) => {
+    if (!highlightRegex) {
       return <span>{text}</span>;
     }
 
-    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+    const parts = text.split(highlightRegex);
     return (
       <span>
         {parts.map((part, index) =>
-          part.toLowerCase() === query.toLowerCase() ? (
+          part.toLowerCase() === searchQuery.toLowerCase() ? (
             <mark key={index} className="search-highlight">{part}</mark>
           ) : (
             <span key={index}>{part}</span>
@@ -64,21 +70,24 @@ export const InboxList: React.FC<InboxListProps> = ({ emails, onEmailClick, onTo
                 onChange={() => onToggleSelection(email.id)}
               />
             </div>
-            <div className="email-content">
-              <div className="email-header">
-                {email.isSent ? <span className="email-sender">{highlightText(email?.receiver || '', searchQuery)}</span> : <span className="email-sender">{highlightText(email.sender, searchQuery)}</span>}
+          <div className="email-content">
+            <div className="email-header">
+              {email.isSent ? <span className="email-sender">{highlightText(email?.receiver || '')}</span> : <span className="email-sender">{highlightText(email.sender)}</span>}
 
-                <span className="email-date">{formatDate(email.date)}</span>
-              </div>
-              <div className="email-subject">{highlightText(email.subject, searchQuery)}</div>
-              {showPreview && (
-                <div className="email-snippet">{highlightText(email.snippet, searchQuery)}</div>
-              )}
+              <span className="email-date">{formatDate(email.date)}</span>
             </div>
+            <div className="email-subject">{highlightText(email.subject)}</div>
+            {showPreview && (
+              <div className="email-snippet">{highlightText(email.snippet)}</div>
+            )}
+          </div>
           </div>
         ))
       )}
     </div>
   );
-};
+});
+
+// Display name for debugging
+InboxList.displayName = 'InboxList';
 

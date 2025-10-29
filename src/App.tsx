@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { InboxProvider, useInbox } from './context/InboxContext';
 import { InboxList } from './components/InboxList';
 import { SearchBar } from './components/SearchBar';
@@ -56,48 +56,49 @@ const InboxApp: React.FC = () => {
     loadPartnerAndTheme();
   }, [inboxState.currentPartner, setPartnerConfig]);
 
-  const handleEmailClick = (email: any) => {
+  // Memoize callbacks passed to child components to prevent unnecessary re-renders
+  const handleEmailClick = useCallback((email: any) => {
     setCurrentEmail(email);
     markAsRead(email.id);
-  };
+  }, [setCurrentEmail, markAsRead]);
 
-  const handleMarkAsRead = () => {
+  const handleMarkAsRead = useCallback(() => {
     if (inboxState.currentEmail) {
       markAsRead(inboxState.currentEmail.id);
     }
-  };
+  }, [inboxState.currentEmail, markAsRead]);
 
-  const handleMarkAsUnread = () => {
+  const handleMarkAsUnread = useCallback(() => {
     if (inboxState.currentEmail) {
       markAsUnread(inboxState.currentEmail.id);
     }
-  };
+  }, [inboxState.currentEmail, markAsUnread]);
 
-  const handleMarkAsSpam = () => {
+  const handleMarkAsSpam = useCallback(() => {
     if (inboxState.currentEmail) {
       markAsSpam(inboxState.currentEmail.id);
       setCurrentEmail(null);
     }
-  };
+  }, [inboxState.currentEmail, markAsSpam, setCurrentEmail]);
 
-  const handleCloseDetail = () => {
+  const handleCloseDetail = useCallback(() => {
     setCurrentEmail(null);
-  };
+  }, [setCurrentEmail]);
 
-  const handlePartnerChange = (partnerId: string) => {
+  const handlePartnerChange = useCallback((partnerId: string) => {
     setCurrentPartner(partnerId);
-  };
+  }, [setCurrentPartner]);
 
-  const handleFolderChange = (folder: FolderType) => {
+  const handleFolderChange = useCallback((folder: FolderType) => {
     setCurrentFolder(folder);
     setCurrentEmail(null);
-  };
+  }, [setCurrentFolder, setCurrentEmail]);
 
-  const handleSendReply = (_recipientEmail: string, subject: string, content: string) => {
+  const handleSendReply = (recipientEmail: string, subject: string, content: string) => {
     const sentEmail: Email = {
       id: `email-sent-${Date.now()}`,
       sender: 'me@mycompany.com',
-      receiver: _recipientEmail,
+      receiver: recipientEmail,
       subject: subject,
       snippet: content.substring(0, 100) + (content.length > 100 ? '...' : ''),
       body: content,
@@ -113,11 +114,15 @@ const InboxApp: React.FC = () => {
     setCurrentEmail(null);
   };
 
+  // Memoize folder counts - only recalculate when state changes
+  const folderCounts = useMemo(() => getFolderCounts(), [inboxState]);
+
+  // Memoize filtered emails - only recalculate when state changes
+  const emails = useMemo(() => getEmailsForDisplay(), [inboxState]);
+
   if (isLoading) {
     return <div className="loading">Loading emails...</div>;
   }
-
-  const folderCounts = getFolderCounts();
 
   if (inboxState.currentEmail) {
     return (
@@ -161,8 +166,6 @@ const InboxApp: React.FC = () => {
       </div>
     );
   }
-
-  const emails = getEmailsForDisplay();
 
   return (
     <div className="app-container">

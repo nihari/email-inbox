@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useInbox } from '../context/InboxContext';
 
 export const SelectionType = {
@@ -22,42 +21,40 @@ export const useInboxOperations = () => {
   } = useInbox();
 
   // Toggle selection for all emails
-  const toggleAllEmailsSelection = useCallback((type: SelectionType) => {
+  const toggleAllEmailsSelection = (type: SelectionType) => {
     if (type === SelectionType.SELECT_ALL) {
       selectAllEmails();
     } else {
       clearAllSelections();
     }
-  }, [selectAllEmails, clearAllSelections]);
+  };
 
-  const markAsRead = useCallback((emailIds: string | string[]) => {
+  const markAsRead = (emailIds: string | string[]) => {
     const ids = Array.isArray(emailIds) ? emailIds : [emailIds];
     bulkUpdateEmails(ids, { isRead: true });
-  }, [bulkUpdateEmails]);
+  };
 
-  const markAsUnread = useCallback((emailIds: string | string[]) => {
+  const markAsUnread = (emailIds: string | string[]) => {
     const ids = Array.isArray(emailIds) ? emailIds : [emailIds];
     bulkUpdateEmails(ids, { isRead: false });
-  }, [bulkUpdateEmails]);
+  };
 
-  const markAsSpam = useCallback((emailIds: string | string[]) => {
+  const markAsSpam = (emailIds: string | string[]) => {
     const ids = Array.isArray(emailIds) ? emailIds : [emailIds];
     bulkUpdateEmails(ids, { isSpam: true });
-    // update filteredIds fro curret folder to add/remove spam
     reapplyFolderFilter();
-  }, [bulkUpdateEmails, reapplyFolderFilter]);
+  };
 
-  const markAsNotSpam = useCallback((emailIds: string | string[]) => {
+  const markAsNotSpam = (emailIds: string | string[]) => {
     const ids = Array.isArray(emailIds) ? emailIds : [emailIds];
     bulkUpdateEmails(ids, { isSpam: false });
-    // update filteredIds for curret folder to remove mails from spam folder
     reapplyFolderFilter();
-  }, [bulkUpdateEmails, reapplyFolderFilter]);
+  };
 
-  const deleteEmails = useCallback((emailIds: string | string[]) => {
+  const deleteEmails = (emailIds: string | string[]) => {
     const ids = Array.isArray(emailIds) ? emailIds : [emailIds];
     deleteFromInbox(ids);
-  }, [deleteFromInbox]);
+  };
 
   return {
     inboxState,

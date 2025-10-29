@@ -13,7 +13,8 @@ interface SideMenuProps {
   showSpamFolder?: boolean;
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({ 
+// Memoize to prevent re-renders when parent re-renders but props haven't changed
+export const SideMenu: React.FC<SideMenuProps> = React.memo(({ 
   currentFolder, 
   onFolderChange,
   emailCounts,
@@ -58,5 +59,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
       </nav>
     </aside>
   );
-};
+});
+
+SideMenu.displayName = 'SideMenu';
 

@@ -5,7 +5,8 @@ interface SearchBarProps {
   onSearchChange: (query: string) => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange }) => {
+// Memoize to prevent re-renders when parent re-renders but props haven't changed
+export const SearchBar: React.FC<SearchBarProps> = React.memo(({ searchQuery, onSearchChange }) => {
   return (
     <div className="search-bar">
       <input
@@ -17,5 +18,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChang
       />
     </div>
   );
-};
+});
+
+SearchBar.displayName = 'SearchBar';
 

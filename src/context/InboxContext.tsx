@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import React, { createContext, useContext, useState, type ReactNode } from 'react';
 import type { InboxState, Email, FolderType, PartnerConfig } from '../types';
 import { InboxStateManager } from '../utils/inboxStateManager';
 
@@ -46,11 +46,11 @@ interface InboxProviderProps {
 export const InboxProvider: React.FC<InboxProviderProps> = ({ children, initialState }) => {
   const [inboxState, setInboxState] = useState<InboxState>(initialState);
 
-  const bulkUpdateEmails = useCallback((emailIds: string[], updates: Partial<Email>) => {
+  const bulkUpdateEmails = (emailIds: string[], updates: Partial<Email>) => {
     setInboxState(prev => InboxStateManager.bulkUpdateEmails(prev, emailIds, updates));
-  }, []);
+  };
 
-  const addEmail = useCallback((email: Email) => {
+  const addEmail = (email: Email) => {
     setInboxState(prev => {
       const stateWithNewEmail = {
         ...prev,
@@ -62,35 +62,35 @@ export const InboxProvider: React.FC<InboxProviderProps> = ({ children, initialS
       };
       return InboxStateManager.filterEmailsByFolder(stateWithNewEmail);
     });
-  }, []);
+  };
 
-  const toggleEmailSelection = useCallback((emailId: string) => {
+  const toggleEmailSelection = (emailId: string) => {
     setInboxState(prev => InboxStateManager.toggleEmailSelection(prev, emailId));
-  }, []);
+  };
 
-  const selectAllEmails = useCallback(() => {
+  const selectAllEmails = () => {
     setInboxState(prev => InboxStateManager.selectAllEmails(prev));
-  }, []);
+  };
 
-  const clearAllSelections = useCallback(() => {
+  const clearAllSelections = () => {
     setInboxState(prev => ({
       ...InboxStateManager.clearAllSelections(prev),
       isSelectAllActive: false
     }));
-  }, []);
+  };
 
-  const setSelectAllActive = useCallback((isActive: boolean) => {
+  const setSelectAllActive = (isActive: boolean) => {
     setInboxState(prev => ({
       ...prev,
       isSelectAllActive: isActive
     }));
-  }, []);
+  };
 
-  const deleteEmails = useCallback((emailIds: string[]) => {
+  const deleteEmails = (emailIds: string[]) => {
     setInboxState(prev => InboxStateManager.deleteEmails(prev, emailIds));
-  }, []);
+  };
 
-  const setSearchQuery = useCallback((query: string) => {
+  const setSearchQuery = (query: string) => {
     setInboxState(prev => {
       const updatedState = {
         ...prev,
@@ -99,37 +99,37 @@ export const InboxProvider: React.FC<InboxProviderProps> = ({ children, initialS
       const folderFiltered = InboxStateManager.filterEmailsByFolder(updatedState);
       return InboxStateManager.filterEmails(folderFiltered, { searchQuery: query });
     });
-  }, []);
+  };
 
-  const setCurrentEmail = useCallback((email: Email | null) => {
+  const setCurrentEmail = (email: Email | null) => {
     setInboxState(prev => ({
       ...prev,
       currentEmail: email
     }));
-  }, []);
+  };
 
-  const setCurrentPartner = useCallback((partnerId: string) => {
+  const setCurrentPartner = (partnerId: string) => {
     setInboxState(prev => ({
       ...prev,
       currentPartner: partnerId
     }));
-  }, []);
+  };
 
-  const setPartnerConfig = useCallback((config: PartnerConfig) => {
+  const setPartnerConfig = (config: PartnerConfig) => {
     setInboxState(prev => ({
       ...prev,
       partnerConfig: config
     }));
-  }, []);
+  };
 
-  const toggleDarkMode = useCallback(() => {
+  const toggleDarkMode = () => {
     setInboxState(prev => ({
       ...prev,
       isDarkMode: !prev.isDarkMode
     }));
-  }, []);
+  };
 
-  const setCurrentFolder = useCallback((folder: FolderType) => {
+  const setCurrentFolder = (folder: FolderType) => {
     setInboxState(prev => {
       const updatedState = {
         ...prev,
@@ -147,9 +147,9 @@ export const InboxProvider: React.FC<InboxProviderProps> = ({ children, initialS
       
       return InboxStateManager.clearAllSelections(filteredState);
     });
-  }, []);
+  };
 
-  const reapplyFolderFilter = useCallback(() => {
+  const reapplyFolderFilter = () => {
     setInboxState(prev => {
       let filteredState = InboxStateManager.filterEmailsByFolder(prev);
       
@@ -159,19 +159,19 @@ export const InboxProvider: React.FC<InboxProviderProps> = ({ children, initialS
       
       return filteredState;
     });
-  }, []);
+  };
 
-  const getEmailsForDisplay = useCallback(() => {
+  const getEmailsForDisplay = () => {
     return InboxStateManager.getEmailsForDisplay(inboxState);
-  }, [inboxState]);
+  };
 
-  const getSelectedEmails = useCallback(() => {
+  const getSelectedEmails = () => {
     return InboxStateManager.getSelectedEmails(inboxState);
-  }, [inboxState]);
+  };
 
-  const getFolderCounts = useCallback(() => {
+  const getFolderCounts = () => {
     return InboxStateManager.getFolderCounts(inboxState);
-  }, [inboxState]);
+  };
 
   const value: InboxContextType = {
     inboxState,
