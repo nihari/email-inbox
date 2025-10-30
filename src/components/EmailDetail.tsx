@@ -16,7 +16,6 @@ export const EmailDetail: React.FC<EmailDetailProps> = ({
   folder,
   email,
   onClose,
-  onMarkAsRead,
   onMarkAsUnread,
   onMarkAsSpam,
   onSendReply,
