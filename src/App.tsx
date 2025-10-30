@@ -54,7 +54,7 @@ const InboxApp: React.FC = () => {
     };
     
     loadPartnerAndTheme();
-  }, [inboxState.currentPartner, setPartnerConfig]);
+  }, [inboxState.currentPartner]);
 
   // Memoize callbacks passed to child components to prevent unnecessary re-renders
   const handleEmailClick = useCallback((email: any) => {
