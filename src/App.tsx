@@ -14,7 +14,19 @@ import type { FolderType, Email } from './types';
 import './App.css';
 
 const InboxApp: React.FC = () => {
-  const { inboxState, setSearchQuery, toggleEmailSelection, setCurrentEmail, getEmailsForDisplay, getFolderCounts, setCurrentPartner, setPartnerConfig, setCurrentFolder, addEmail, toggleDarkMode } = useInbox();
+  const { 
+    inboxState, 
+    setSearchQuery, 
+    toggleEmailSelection, 
+    setCurrentEmail, 
+    getEmailsForDisplay,
+    getFolderCounts, 
+    setCurrentPartner, 
+    setPartnerConfig, 
+    setCurrentFolder, 
+    addEmail, 
+    toggleDarkMode 
+  } = useInbox();
   const { 
     markAsRead, 
     markAsUnread, 

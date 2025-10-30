@@ -58,11 +58,11 @@ export const useInboxOperations = () => {
 
   return {
     inboxState,
-    markAsRead, // Works with single or array of IDs
-    markAsUnread, // Works with single or array of IDs
-    markAsSpam, // Works with single or array of IDs
-    markAsNotSpam, // Works with single or array of IDs
-    deleteEmails, // Works with single or array of IDs
+    markAsRead,
+    markAsUnread,
+    markAsSpam,
+    markAsNotSpam,
+    deleteEmails,
     toggleEmailSelection,
     toggleAllEmailsSelection,
     setCurrentEmail,
