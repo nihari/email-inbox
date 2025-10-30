@@ -48,7 +48,7 @@ npm run lint
 npm run type-check
 ```
 
-## Design Patterns Used
+## Engineering Practices
 
 1. **Context API**: Global state management
 2. **Custom Hooks**: Reusable business logic
