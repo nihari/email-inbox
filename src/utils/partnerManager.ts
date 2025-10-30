@@ -8,7 +8,7 @@ const loadPartnerTypesRegistry = async (): Promise<PartnerTypesRegistry | null> 
     return partnerTypesRegistry;
   }
   
-  const response = await fetch('/src/config/partner-types.json');
+  const response = await fetch('/config/partner-types.json');
   if (!response.ok) {
     throw new Error('Failed to load partner types registry');
   }
@@ -29,7 +29,7 @@ export const getValidPartnerTypes = async (): Promise<string[]> => {
 };
 
 export const loadPartnerConfig = async (partnerId: string): Promise<PartnerConfig> => {
-  const response = await fetch(`/src/config/${partnerId}.json`);
+  const response = await fetch(`/config/${partnerId}.json`);
   if (!response.ok) {
     throw new Error(`Failed to load partner config: ${partnerId}`);
   }

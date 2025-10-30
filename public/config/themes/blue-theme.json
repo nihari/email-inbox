@@ -1,0 +1,40 @@
+{
+  "themeId": "blue-theme",
+  "themeName": "Professional Blue Theme",
+  "colors": {
+    "primary": "#2563eb",
+    "secondary": "#1d4ed8",
+    "background": "#f8fafc",
+    "surface": "#ffffff",
+    "text": "#1e293b",
+    "textSecondary": "#64748b",
+    "border": "#e2e8f0",
+    "accent": "#3b82f6",
+    "success": "#10b981",
+    "warning": "#f59e0b",
+    "error": "#ef4444"
+  },
+  "typography": {
+    "fontFamily": "Inter, system-ui, sans-serif",
+    "fontSize": {
+      "small": "0.875rem",
+      "medium": "1rem",
+      "large": "1.125rem",
+      "xl": "1.25rem"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem"
+  },
+  "branding": {
+    "logoColor": "#2563eb",
+    "logoFontSize": "1.5rem",
+    "logoFontWeight": "600"
+  }
+}
+
+

@@ -1,7 +1,7 @@
 import type { ThemeConfig } from '../types';
 
 export const loadTheme = async (themeId: string): Promise<ThemeConfig> => {
-  const response = await fetch(`/src/config/themes/${themeId}.json`);
+  const response = await fetch(`/config/themes/${themeId}.json`);
   if (!response.ok) {
     throw new Error(`Failed to load theme: ${themeId}`);
   }
