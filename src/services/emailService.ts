@@ -177,8 +177,6 @@ export const createInitialInboxState = (): InboxState => {
       const email = emailsRecord[id];
       return !email.isSpam && !email.isSent; // Default to inbox
     }),
-    bin: {},
-    binIds: [],
   };
 };
 

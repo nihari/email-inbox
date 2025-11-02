@@ -87,8 +87,6 @@ export interface InboxState {
   isDarkMode: boolean;
   emailIds: string[];
   filteredEmailIds: string[];
-  bin: Record<string, Email>;
-  binIds: string[];
 }
 
 export type EmailId = string;

@@ -29,7 +29,7 @@ export const SideMenu: React.FC<SideMenuProps> = React.memo(({
     { folder: 'inbox', label: 'Inbox', icon: '📥', count: emailCounts.inbox },
     { folder: 'sent', label: 'Sent', icon: '📤', count: emailCounts.sent },
     { folder: 'spam', label: 'Spam', icon: '🚫', count: emailCounts.spam },
-    { folder: 'trash', label: 'Trash', icon: '🗑️', count: emailCounts.trash },
+    // { folder: 'trash', label: 'Trash', icon: '🗑️', count: emailCounts.trash },
   ];
 
   // Filter out spam folder if partner doesn't support spam features

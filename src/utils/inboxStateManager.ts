@@ -23,17 +23,16 @@ export class InboxStateManager {
 
   static deleteEmails(state: InboxState, emailIds: EmailId[]): InboxState {
     const updatedEmails = { ...state.emails };
-    const updatedBin = { ...state.bin };
     const remainingEmailIds: string[] = [];
 
+    // Permanently delete emails from the emails object
+    emailIds.forEach(emailId => {
+      delete updatedEmails[emailId];
+    });
+
+    // Update emailIds array to remove deleted email IDs
     state.emailIds.forEach(id => {
-      if (emailIds.includes(id)) {
-        const email = updatedEmails[id];
-        if (email) {
-          updatedBin[id] = { ...email, isSelected: false };
-          delete updatedEmails[id];
-        }
-      } else {
+      if (!emailIds.includes(id)) {
         remainingEmailIds.push(id);
       }
     });
@@ -47,8 +46,6 @@ export class InboxStateManager {
       emailIds: remainingEmailIds,
       filteredEmailIds: updatedFiltered,
       selectedEmails: updatedSelected,
-      bin: updatedBin,
-      binIds: [...Object.keys(updatedBin)],
       currentEmail: state.currentEmail && emailIds.includes(state.currentEmail.id) ? null : state.currentEmail,
       isSelectAllActive: updatedFiltered.length === 0 ? false : state.isSelectAllActive,
     };
@@ -112,7 +109,7 @@ export class InboxStateManager {
     const baseEmailIds = state.filteredEmailIds.length > 0 ? state.filteredEmailIds : state.emailIds;
     
     const filteredIds = baseEmailIds.filter(emailId => {
-      const email = state.currentFolder === 'trash' ? state.bin[emailId] : state.emails[emailId];
+      const email = state.emails[emailId];
       
       if (!email) return false;
       
@@ -150,13 +147,7 @@ export class InboxStateManager {
   }
 
   static getEmailsForDisplay(state: InboxState): Email[] {
-    const { currentFolder, filteredEmailIds, bin } = state;
-    
-    if (currentFolder === 'trash') {
-      return filteredEmailIds.map(emailId => bin[emailId]).filter(Boolean);
-    }
-    
-    return filteredEmailIds.map(emailId => state.emails[emailId]).filter(Boolean);
+    return state.filteredEmailIds.map(emailId => state.emails[emailId]).filter(Boolean);
   }
 
   static getSelectedEmails(state: InboxState): Email[] {
@@ -164,7 +155,7 @@ export class InboxStateManager {
   }
 
   static filterEmailsByFolder(state: InboxState): InboxState {
-    const { currentFolder, emailIds, emails, binIds } = state;
+    const { currentFolder, emailIds, emails } = state;
     
     let filteredIds: string[];
     
@@ -191,7 +182,8 @@ export class InboxStateManager {
         break;
       
       case 'trash':
-        filteredIds = binIds;
+        // Trash folder is now empty since emails are permanently deleted
+        filteredIds = [];
         break;
       
       default:
@@ -217,7 +209,7 @@ export class InboxStateManager {
       inbox: emails.filter(email => !email.isSpam && !email.isSent).length,
       sent: emails.filter(email => email.isSent).length,
       spam: emails.filter(email => email.isSpam).length,
-      trash: state.binIds.length
+      trash: 0 // Trash is always empty since emails are permanently deleted
     };
   }
 }
